@@ -1,7 +1,7 @@
 import argparse
 
-from .app import app
-from .version import __version__
+from app import app
+from version import __version__
 
 """
     A server for providing the app anywhere, no need for GAE
@@ -24,7 +24,7 @@ def main():
 
     parser.add_argument(
         '--host',
-        default='localhost',
+        default='0.0.0.0',
         type=str,
         help='The host the server will use. The default is: %(default)s',
     )
@@ -45,4 +45,4 @@ def main():
         print(__version__)
         exit(0)
 
-    app.run(args.host, args.port, processes=args.number_processes)
+    app.run(args.host, args.port)

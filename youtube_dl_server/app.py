@@ -7,7 +7,7 @@ from flask import Flask, Blueprint, current_app, jsonify, request, redirect, abo
 import youtube_dl
 from youtube_dl.version import __version__ as youtube_dl_version
 
-from .version import __version__
+from version import __version__
 
 
 if not hasattr(sys.stderr, 'isatty'):
@@ -171,6 +171,13 @@ def list_extractors():
     } for ie in youtube_dl.gen_extractors()]
     return jsonify(extractors=ie_list)
 
+@route_api('download')
+@set_access_control
+def download():
+    url = request.args['url']
+    ydl_opts = {}
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
 
 @route_api('version')
 @set_access_control
